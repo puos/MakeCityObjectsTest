@@ -363,13 +363,17 @@ public partial class MainWindow : Window
 
         try
         {
+            var timeCheck = Stopwatch.StartNew();
+
             CityEditor.CityEditorManager.Instance.MakeCityObjects(
              cityObjList, dialog.FolderName, out var ignorList, CityEditor.ExportFormat.OBJ);
 
             cityWeaverMapViewSecond.ClearSelection();
 
+            timeCheck.Stop();
+
             MessageBox.Show(this,
-            $"OBJ output  complete\n- group {cityObjList.Count} → {dialog.FolderName}\n- skipped (existing files) {ignorList.Count}",
+            $"OBJ output  complete\n- group {cityObjList.Count} → {dialog.FolderName}\n- skipped (existing files) {ignorList.Count}\n- elapsed time {timeCheck.ElapsedMilliseconds * 0.001}",
             "OBJ output", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         catch (Exception ex)
