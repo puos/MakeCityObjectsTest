@@ -20,6 +20,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ProjectFileData = NeoCore.Photogrammetry.ProjectData.ProjectFileData;
 using Geometry = NetTopologySuite.Geometries.Geometry;
+using NeoCore.Runtime;
+using System.Diagnostics;
 
 namespace CityWeaver.Project;
 
@@ -342,27 +344,6 @@ public partial class MainWindow : Window
         TraceUtil.WriteLine($"[정합창] 영역 선택: 도로 {_roads.Count} , 건물 {_buildings.Count}");
     }
 
-
-    private static bool IsLocked(string shpPath)
-    {
-        foreach (var ext in new[] { ".shp", ".shx", ".dbf", ".prj", ".cpg", ".sbn", ".sbx" })
-        {
-            string p = System.IO.Path.ChangeExtension(shpPath, ext);
-            if (!System.IO.File.Exists(p)) continue;
-            try
-            {
-                using var _ = System.IO.File.Open(
-                    p, System.IO.FileMode.Open,
-                    System.IO.FileAccess.ReadWrite, System.IO.FileShare.None);
-            }
-            catch (System.IO.IOException)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private void GmlOutputButton_Click(object sender, RoutedEventArgs e)
     {
 
@@ -370,11 +351,105 @@ public partial class MainWindow : Window
 
     private void ObjOutputButton_Click(object sender, RoutedEventArgs e)
     {
+        var cityObjList = BuildCityObjects();
+        if (cityObjList.Count == 0)
+        {
+            MessageBox.Show("No city objects to export.");
+            return;
+        }
+        var dialog = new Microsoft.Win32.OpenFolderDialog { Title = "Select OBJ Output folder" };
+        if (dialog.ShowDialog() != true)
+            return;
 
+        try
+        {
+            CityEditor.CityEditorManager.Instance.MakeCityObjects(
+             cityObjList, dialog.FolderName, out var ignorList, CityEditor.ExportFormat.OBJ);
+
+            cityWeaverMapViewSecond.ClearSelection();
+
+            MessageBox.Show(this,
+            $"OBJ output  complete\n- group {cityObjList.Count} → {dialog.FolderName}\n- skipped (existing files) {ignorList.Count}",
+            "OBJ output", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Failed to export OBJ: {ex.Message}");
+        }
     }
 
     private void OpenUsdOutputButton_Click(object sender, RoutedEventArgs e)
     {
+        var cityObjList = BuildCityObjects();
+        if(cityObjList.Count == 0)
+        {
+            MessageBox.Show("No city objects to export.");
+            return;
+        }
+        var dialog = new Microsoft.Win32.OpenFolderDialog { Title = "Select USD Output folder" };
+        if (dialog.ShowDialog() != true)
+            return;
 
+        try 
+        {
+            var timeCheck = Stopwatch.StartNew();
+
+            CityEditor.CityEditorManager.Instance.MakeCityObjects(
+             cityObjList, dialog.FolderName, out var ignorList, CityEditor.ExportFormat.USD);
+
+            cityWeaverMapViewSecond.ClearSelection();
+
+            timeCheck.Stop();
+
+            MessageBox.Show(this,
+            $"USD output  complete\n- group {cityObjList.Count} → {dialog.FolderName}\n- skipped (existing files) {ignorList.Count} \n- elapsed time { timeCheck.ElapsedMilliseconds * 0.001}",
+            "USD output", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Failed to export USD: {ex.Message}");
+        }
+    }
+
+    private Dictionary<string, List<CityEditor.Templates.CityObjTemplate>> BuildCityObjects() 
+    {
+        var cityObjList = new Dictionary<string, List<CityEditor.Templates.CityObjTemplate>>();
+
+        void AddTo(string key,IEnumerable<CityEditor.Templates.CityObjTemplate> objs)
+        {
+            if(!cityObjList.TryGetValue(key,out var list))
+                cityObjList[key] = list = new List<CityEditor.Templates.CityObjTemplate>();
+            list.AddRange(objs);
+        }
+
+        bool hasSelected = _selectedRoadIds.Count > 0 || _selectedBuildingIds.Count > 0;
+
+        if (hasSelected)
+        {
+            foreach (var (key, obj) in _buildings)
+                AddTo(key, new[] { obj.ToCityObject() });
+
+            foreach(var (key,obj) in _roads)
+                AddTo(key, obj.ToCityObjects());
+        }
+        else
+        {
+            foreach(var bt in _buildingTemplateStore.Templates)
+            {
+                string bKey = string.IsNullOrEmpty(bt.ObjectGroupId) ? "B0" : bt.ObjectGroupId;
+                AddTo(bKey, new[] { new BuildingEditor.Templates.ObjTemplate(bt).ToCityObject() });
+            }
+
+            foreach(var rt in _roadTemplateStore.Templates)
+            {
+                if(rt.Type is not BaseRoadTemplate.RoadType.Flat and not BaseRoadTemplate.RoadType.Bridge)
+                    continue;
+
+                string rKey = string.IsNullOrEmpty(rt.ObjectGroupId) ? "R0" : rt.ObjectGroupId;
+                AddTo(rKey, new RoadObjTemplate(rt).ToCityObjects());
+            }
+        }
+
+        return cityObjList;
     }
 }
