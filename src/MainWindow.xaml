@@ -1,0 +1,56 @@
+﻿<Window x:Class="CityWeaver.Project.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mapview="clr-namespace:CityWeaver.MapView;assembly=CityWeaver"
+         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        mc:Ignorable="d"
+        Title="MainWindow" WindowStyle="None" Background="Transparent" AllowsTransparency="True"
+         Closed="Window_Closed" Height="500" Width="700">
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="1" ResizeBorderThickness="6" GlassFrameThickness="1"/>
+    </shell:WindowChrome.WindowChrome>
+    <Window.Resources>
+        <Style x:Key="RoundedLabelStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="16" />
+            <Setter Property="Background" Value="#5582FF" />
+            <Setter Property="Padding" Value="3" />
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Border Background="{DynamicResource AppBackground}" BorderBrush="Black" BorderThickness="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <DockPanel Background="{DynamicResource AppBackground}" Grid.Row="0" Height="30" VerticalAlignment="Top" LastChildFill="False" MouseDown="DockPanel_MouseDown">
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                        <Button Click="MinimizeButton_Click" Background="{DynamicResource AppBackground}" Foreground="{DynamicResource AppForeground}" BorderThickness="0" Width="45">
+                            <TextBlock Text="━" FontSize="13" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Button>
+                        <Button Click="CloseButton_Click" Background="{DynamicResource AppBackground}" Foreground="{DynamicResource AppForeground}" BorderThickness="0" Width="45">
+                            <TextBlock Text="✕" FontSize="13" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Button>
+                    </StackPanel>
+                    <TextBlock Text="ShpImportTest" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource AppForeground}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                </DockPanel>
+
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="8,4">
+                    <Button x:Name="OpenUsdOutputButton" Content="OpenUSD 출력" Click="OpenUsdOutputButton_Click" Margin="0,0,10,0"/>
+                    <Button x:Name="GmlOutputButton" Content="GML 출력" Click="GmlOutputButton_Click" Margin="0,0,10,0"/>
+                    <Button x:Name="ObjOutputButton" Content="OBJ 출력" Click="ObjOutputButton_Click" Margin="0,0,10,0"/>
+                </StackPanel>
+
+                <Grid Grid.Row="2">
+                    <mapview:CityWeaverMapView x:Name="cityWeaverMapViewSecond" Loaded="CityWeaverMapView_Loaded" />
+                </Grid>
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

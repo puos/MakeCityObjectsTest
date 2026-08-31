@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37012.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MakeCityObjectsTest", "src\MakeCityObjectsTest.csproj", "{AEC85ACC-7674-4B9C-B5CD-FCAF08D78603}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoCore", "..\NeoCore\src\NeoCore\NeoCore.csproj", "{CA31181A-1D1E-670E-B90F-AE6127CDEE30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoAICore", "..\NeoAICore\src\NeoAICore\NeoAICore.csproj", "{1D9A0FBC-62C4-4FF0-5471-C9773827EBED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A4L.MapprimeNet", "..\MapPrimeNet\src\MapPrimeNet\A4L.MapprimeNet\A4L.MapprimeNet.csproj", "{F6754713-75BC-7199-7C86-D5B4F17245C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "laszip.net", "..\MapPrimeNet\src\MapPrimeNet\laszip.net\laszip.net.csproj", "{0A6D6401-4779-4517-967E-969020D68742}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityWeaver", "..\CityWeaver\src\CityWeaver\CityWeaver.csproj", "{A21AB72D-2497-9489-A58C-6731C8B235F6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AEC85ACC-7674-4B9C-B5CD-FCAF08D78603}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEC85ACC-7674-4B9C-B5CD-FCAF08D78603}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEC85ACC-7674-4B9C-B5CD-FCAF08D78603}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEC85ACC-7674-4B9C-B5CD-FCAF08D78603}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA31181A-1D1E-670E-B90F-AE6127CDEE30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA31181A-1D1E-670E-B90F-AE6127CDEE30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA31181A-1D1E-670E-B90F-AE6127CDEE30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA31181A-1D1E-670E-B90F-AE6127CDEE30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D9A0FBC-62C4-4FF0-5471-C9773827EBED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D9A0FBC-62C4-4FF0-5471-C9773827EBED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D9A0FBC-62C4-4FF0-5471-C9773827EBED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D9A0FBC-62C4-4FF0-5471-C9773827EBED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6754713-75BC-7199-7C86-D5B4F17245C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6754713-75BC-7199-7C86-D5B4F17245C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6754713-75BC-7199-7C86-D5B4F17245C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6754713-75BC-7199-7C86-D5B4F17245C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A6D6401-4779-4517-967E-969020D68742}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A6D6401-4779-4517-967E-969020D68742}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A6D6401-4779-4517-967E-969020D68742}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A6D6401-4779-4517-967E-969020D68742}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A21AB72D-2497-9489-A58C-6731C8B235F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A21AB72D-2497-9489-A58C-6731C8B235F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A21AB72D-2497-9489-A58C-6731C8B235F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A21AB72D-2497-9489-A58C-6731C8B235F6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1421BEE0-9F5F-45E1-B426-E5C741B189CD}
+	EndGlobalSection
+EndGlobal
